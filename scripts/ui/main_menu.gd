@@ -64,7 +64,7 @@ func _ready() -> void:
 	_root_box.add_theme_constant_override("separation", 12)
 	add_child(_root_box)
 
-	var title := _mk_label("VALU", 64, Color(1, 0.27, 0.33))
+	var title := _mk_label("RIFTOPS", 64, Color(1, 0.27, 0.33))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_root_box.add_child(title)
 	var subtitle := _mk_label("LAN tactical shooter", 18, Color(0.6, 0.65, 0.7))

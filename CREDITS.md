@@ -2,20 +2,16 @@
 
 ## License scope
 
-Valu's project-authored source code is copyright (c) 2026 Daksh Mor and is
-licensed under the [MIT License](LICENSE). Except for third-party material
-identified below or in the asset manifest, the project's original media
-(including artwork, icons, branding, UI assets and designs, and audio),
-documentation, and repository/store metadata are also copyright (c) 2026
-Daksh Mor and are made available under the same MIT License terms.
+The root `LICENSE` file is not distributed in this RIFTOPS repository. This
+repository includes code and content inherited from Valu; removing that file
+does not revoke license grants already made with earlier releases or change
+the rights attached to third-party works. Review the relevant source history
+and asset-specific terms before redistributing or relicensing project content.
 
-That MIT license does **not** relicense bundled third-party art, audio, fonts,
-or engine code. Those components remain under their original CC0, CC BY, SIL
-OFL, or MIT terms listed below and in the
-[complete asset manifest](docs/ASSETS.md). Third-party material incorporated
-into or depicted by project-authored UI, screenshots, icons, or metadata also
-retains its original license; only Valu's original contribution receives the
-MIT grant above.
+Third-party art, audio, fonts, and engine code retain their own CC0, CC BY,
+SIL OFL, or MIT terms listed below and in the [complete asset manifest](docs/ASSETS.md).
+Third-party material incorporated into or depicted by project-authored UI,
+screenshots, icons, or metadata likewise retains its original license.
 
 ## Required notices
 

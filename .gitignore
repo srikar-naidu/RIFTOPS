@@ -1,0 +1,94 @@
+# Godot-generated caches and local editor data
+/.godot/
+/.godot_home/
+/.import/
+/.mono/
+/.godot/editor/
+/export_credentials.cfg
+/override.cfg
+
+# Exported games and Android build products
+/builds/
+/dist/
+/exports/
+/android/.gradle/
+/android/build/
+*.apk
+*.apk.idsig
+*.aab
+*.idsig
+*.pck
+*.ipa
+*.dmg
+
+# Test, coverage, log, and temporary output
+/tests/logs/
+/coverage/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+/.cache/
+/.tmp/
+/tmp/
+
+# Raw asset-download staging (never referenced by the project)
+/assets/_staging/
+
+# Local IDE state
+/.vscode/
+/.idea/
+/.fleet/
+/.cursor/
+*.code-workspace
+*.sublime-workspace
+
+# macOS metadata
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Android signing material
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pk8
+*.mobileprovision
+keystore.properties
+signing.properties
+key.properties
+local.properties
+/android/key.properties
+
+# Credentials and machine-local environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.secret
+*.secrets
+/credentials/
+/secrets/
+credentials.json
+credentials*.txt
+service-account*.json
+firebase-adminsdk-*.json
+google-services.json
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Fastlane-generated reports (store metadata remains tracked)
+/fastlane/report.xml
+/fastlane/Preview.html
+/fastlane/screenshots/
+/fastlane/test_output/

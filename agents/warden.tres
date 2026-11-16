@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="AgentData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/agent_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ability_data.gd" id="2"]
+
+[sub_resource type="Resource" id="ab_wall"]
+script = ExtResource("2")
+id = &"wall"
+display_name = "Barrier Wall"
+description = "Place a solid 5m x 2.5m wall (4 segments, 400hp each). Blocks movement and bullets."
+cost = 400
+max_charges = 1
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.4, 0.65, 0.95, 1)
+
+[sub_resource type="Resource" id="ab_slow"]
+script = ExtResource("2")
+id = &"slow"
+display_name = "Slow Orb"
+description = "Throw an orb that bursts into a slow field: 65% slow for 7s."
+cost = 200
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.4, 0.65, 0.95, 1)
+
+[sub_resource type="Resource" id="ab_heal"]
+script = ExtResource("2")
+id = &"heal"
+display_name = "Heal"
+description = "Heal the ally in your crosshair (within 10m) or yourself: 100hp over 5s."
+cost = 0
+max_charges = 1
+signature = true
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.4, 0.65, 0.95, 1)
+
+[resource]
+script = ExtResource("1")
+id = &"warden"
+display_name = "Warden"
+role = "Sentinel"
+description = "Site anchor: destructible barrier wall, slow orb, heal."
+model_path = "res://assets/characters/Knight_Male.gltf"
+tint = Color(0.4, 0.65, 0.95, 1)
+abilities = [SubResource("ab_wall"), SubResource("ab_slow"), SubResource("ab_heal")]

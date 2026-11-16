@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="AgentData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/agent_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ability_data.gd" id="2"]
+
+[sub_resource type="Resource" id="ab_flash"]
+script = ExtResource("2")
+id = &"flash"
+display_name = "Pop Flash"
+description = "Throw a flash that detonates after a short fuse: white-out up to 2s by angle/distance/LOS. Affects allies too."
+cost = 250
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.95, 0.85, 0.35, 1)
+
+[sub_resource type="Resource" id="ab_recon"]
+script = ExtResource("2")
+id = &"recon"
+display_name = "Recon Pulse"
+description = "Throw a sensor: 2 pulses reveal enemies within 15m line-of-sight through walls for 2s."
+cost = 0
+max_charges = 1
+signature = true
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.95, 0.85, 0.35, 1)
+
+[sub_resource type="Resource" id="ab_concuss"]
+script = ExtResource("2")
+id = &"concuss"
+display_name = "Concussion"
+description = "Lob a blast (5m): 65% slow, heavy weapon spread and no ADS for 4s. Affects allies too."
+cost = 200
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.95, 0.85, 0.35, 1)
+
+[resource]
+script = ExtResource("1")
+id = &"flint"
+display_name = "Flint"
+role = "Initiator"
+description = "Info and entry support: pop flash, recon pulse, concussion."
+model_path = "res://assets/characters/Suit_Male.gltf"
+tint = Color(0.95, 0.85, 0.35, 1)
+abilities = [SubResource("ab_flash"), SubResource("ab_recon"), SubResource("ab_concuss")]

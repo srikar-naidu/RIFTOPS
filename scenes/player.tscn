@@ -1,0 +1,138 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/weapon_manager.gd" id="2_wm"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="3_hb"]
+[ext_resource type="Script" path="res://scripts/ability_controller.gd" id="4_ac"]
+
+[sub_resource type="CapsuleShape3D" id="cap_body"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="mesh_tp"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="SphereShape3D" id="shape_head"]
+radius = 0.14
+
+[sub_resource type="CapsuleShape3D" id="shape_torso"]
+radius = 0.26
+height = 0.85
+
+[sub_resource type="BoxShape3D" id="shape_legs"]
+size = Vector3(0.42, 0.8, 0.34)
+
+[sub_resource type="SceneReplicationConfig" id="repcfg"]
+properties/0/path = NodePath(".:sync_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:sync_yaw")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:sync_pitch")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:sync_crouched")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath(".:sync_slot")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath(".:player_name")
+properties/5/spawn = true
+properties/5/replication_mode = 0
+properties/6/path = NodePath(".:team")
+properties/6/spawn = true
+properties/6/replication_mode = 0
+properties/7/path = NodePath(".:primary_id")
+properties/7/spawn = true
+properties/7/replication_mode = 0
+properties/8/path = NodePath(".:secondary_id")
+properties/8/spawn = true
+properties/8/replication_mode = 0
+properties/9/path = NodePath(".:agent_id")
+properties/9/spawn = true
+properties/9/replication_mode = 0
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_player")
+
+[node name="Capsule" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("cap_body")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+fov = 75.0
+near = 0.05
+
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+mesh = SubResource("mesh_tp")
+
+[node name="NameTag" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+pixel_size = 0.004
+billboard = 1
+text = "Player"
+font_size = 64
+outline_size = 16
+
+[node name="Shot3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+unit_size = 12.0
+max_distance = 80.0
+
+[node name="Hitboxes" type="Node3D" parent="."]
+
+[node name="HeadBox" type="Area3D" parent="Hitboxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56, 0)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_hb")
+region = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Hitboxes/HeadBox"]
+shape = SubResource("shape_head")
+
+[node name="BodyBox" type="Area3D" parent="Hitboxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 0)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_hb")
+region = 1
+
+[node name="Shape" type="CollisionShape3D" parent="Hitboxes/BodyBox"]
+shape = SubResource("shape_torso")
+
+[node name="LegsBox" type="Area3D" parent="Hitboxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_hb")
+region = 2
+
+[node name="Shape" type="CollisionShape3D" parent="Hitboxes/LegsBox"]
+shape = SubResource("shape_legs")
+
+[node name="MoveSync" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("..")
+replication_interval = 0.04
+replication_config = SubResource("repcfg")
+public_visibility = false
+
+[node name="WeaponManager" type="Node" parent="."]
+script = ExtResource("2_wm")
+
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("4_ac")

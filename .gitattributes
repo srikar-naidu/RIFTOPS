@@ -1,0 +1,13 @@
+# Keep binary game and store assets out of textual diffs.
+*.bin binary
+*.glb binary
+*.hdr binary
+*.jpeg binary
+*.jpg binary
+*.ogg binary
+*.png binary
+*.ttf binary
+*.wav binary
+
+# glTF sources commonly contain large embedded binary payloads.
+*.gltf -diff

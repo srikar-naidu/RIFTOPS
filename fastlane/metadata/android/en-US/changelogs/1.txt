@@ -1,0 +1,6 @@
+Initial release:
+
+- LAN-only hosting, discovery, and manual IP joining
+- Objective-round and team-deathmatch modes
+- Touch controls, weapons, tactical abilities, economy, and the Solstice map
+- No ads, trackers, analytics, or accounts

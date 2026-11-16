@@ -1,0 +1,7 @@
+Valu is an original tactical first-person shooter built for team play on a local network.
+
+Host a match or join another device on the same Wi-Fi or LAN. Fight in objective-based rounds or team deathmatch, choose from distinct combat roles, buy weapons and equipment, and use tactical abilities. Touch controls are designed for landscape phones.
+
+Multiplayer is LAN-only: there is no online matchmaking or hosted service. Valu has no ads, trackers, analytics, accounts, or in-app purchases.
+
+Valu is open source. Its project-authored code and media are available under the MIT License. Bundled third-party media retains its documented free licenses, including CC0 1.0, CC BY 3.0, and the SIL Open Font License 1.1.

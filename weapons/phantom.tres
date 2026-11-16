@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"phantom"
+display_name = "Phantom"
+price = 2900
+category = "Rifle"
+slot = 0
+fire_mode = 1
+fire_rate = 11.0
+mag_size = 30
+reserve_ammo = 90
+reload_time = 2.5
+equip_time = 1.0
+max_range = 120.0
+damage_bands = Array[Vector4]([Vector4(20, 156, 39, 33), Vector4(50, 140, 35, 29)])
+melee_back_multiplier = 1.0
+applies_tag = true
+first_shot_spread = 0.2
+crouch_spread_mult = 0.85
+max_spread = 2.4
+spread_crouch_move = 0.8
+spread_walk = 3.0
+spread_run = 6.0
+spread_air = 10.0
+spray_pattern = Array[Vector2]([Vector2(0, 0), Vector2(0.02, 0.35), Vector2(-0.04, 0.72), Vector2(0.06, 1.1), Vector2(-0.08, 1.5), Vector2(0.1, 1.85), Vector2(-0.14, 2.15), Vector2(0.18, 2.4), Vector2(-0.22, 2.6)])
+spray_random_spread = 1.15
+spray_growth_per_shot = 0.05
+recovery_time = 0.4
+recoil_kick_deg = 0.32
+ads_zoom = 1.25
+ads_spread_mult = 0.55
+ads_fire_rate_mult = 0.9
+ads_move_mult = 0.76
+ads_time = 0.25
+move_speed_mult = 0.8
+viewmodel_path = "res://assets/weapons/Sniper_2.gltf"
+viewmodel_scale = 1.0
+viewmodel_tint = Color(0.28, 0.38, 0.32, 1)
+fire_sound_path = "res://assets/audio/guns/gun_rifle_phantom.wav"
+tracer_visible_to_others = false

@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="AgentData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/agent_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ability_data.gd" id="2"]
+
+[sub_resource type="Resource" id="ab_sky_smoke"]
+script = ExtResource("2")
+id = &"sky_smoke"
+display_name = "Sky Smoke"
+description = "Target anywhere within 50m on the map overlay: a 4m smoke lands there for 15s."
+cost = 100
+max_charges = 2
+signature = true
+cooldown = 0.0
+map_targeted = true
+icon_color = Color(0.95, 0.55, 0.25, 1)
+
+[sub_resource type="Resource" id="ab_molly"]
+script = ExtResource("2")
+id = &"molly"
+display_name = "Molly"
+description = "Lob a grenade that ignites a 3.5m fire pool: ~8 dps for 5.5s (allies take half)."
+cost = 250
+max_charges = 1
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.95, 0.55, 0.25, 1)
+
+[sub_resource type="Resource" id="ab_stim"]
+script = ExtResource("2")
+id = &"stim"
+display_name = "Stim Beacon"
+description = "Toss a beacon: allies in 12m gain +15% fire rate and move speed for 12s."
+cost = 100
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.95, 0.55, 0.25, 1)
+
+[resource]
+script = ExtResource("1")
+id = &"ember"
+display_name = "Ember"
+role = "Controller"
+description = "Map control: two sky smokes, molly area denial, stim beacon."
+model_path = "res://assets/characters/Soldier_Male.gltf"
+tint = Color(0.95, 0.55, 0.25, 1)
+abilities = [SubResource("ab_sky_smoke"), SubResource("ab_molly"), SubResource("ab_stim")]

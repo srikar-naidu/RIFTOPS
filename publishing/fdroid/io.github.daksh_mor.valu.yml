@@ -1,0 +1,74 @@
+Categories:
+  - Shooter Game
+License: MIT
+AuthorName: Daksh Mor
+AuthorWebSite: https://github.com/daksh-mor
+WebSite: https://github.com/daksh-mor/valu
+SourceCode: https://github.com/daksh-mor/valu
+IssueTracker: https://github.com/daksh-mor/valu/issues
+Changelog: https://github.com/daksh-mor/valu/releases
+
+AutoName: Valu
+
+RepoType: git
+Repo: https://github.com/daksh-mor/valu.git
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    timeout: 14400
+    sudo:
+      - apt-get update
+      - apt-get install -y pkgconf scons g++
+    output: builds/Valu-1.0.0-fdroid.apk
+    srclibs:
+      - Godot@4.7.1-stable
+    prebuild:
+      - mkdir -p builds
+      - sed -i -E 's|^([[:space:]]*package/signed)[[:space:]]*=.*$|\1=false|'
+        export_presets.cfg
+      - sed -i -E 's|^([[:space:]]*custom_template/release)[[:space:]]*=.*$|\1="$$Godot$$/bin/android_release.apk"|'
+        export_presets.cfg
+      - sed -i -E -e 's|^(architectures/armeabi-v7a)=.*$|\1=false|'
+        -e 's|^(architectures/arm64-v8a)=.*$|\1=true|'
+        -e 's|^(architectures/x86)=.*$|\1=false|'
+        -e 's|^(architectures/x86_64)=.*$|\1=false|' export_presets.cfg
+      - sed -i -E -e 's|^(keystore/release)=.*$|\1=""|'
+        -e 's|^(keystore/release_user)=.*$|\1=""|'
+        -e 's|^(keystore/release_password)=.*$|\1=""|' export_presets.cfg
+    build:
+      - export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+      - export PATH="$JAVA_HOME/bin:$PATH"
+      - export ANDROID_HOME=$$SDK$$
+      - export ANDROID_SDK_ROOT=$$SDK$$
+      - export ANDROID_NDK_ROOT=$$NDK$$
+      - pushd $$Godot$$
+      - scons -j `nproc` platform=linuxbsd target=editor
+      - scons -j `nproc` platform=android target=template_release arch=arm64
+        production=yes swappy=no
+      - cd platform/android/java
+      - gradle generateGodotTemplates
+      - popd
+      - $$Godot$$/bin/godot.linuxbsd.editor.x86_64 --headless --path . --import
+      - export GODOT_CFG=$(ls "$HOME"/.config/godot/editor_settings-*.tres)
+      - sed -i -E "s|^(export/android/java_sdk_path)[[:space:]]*=.*$|\1 = \"$JAVA_HOME\"|"
+        "$GODOT_CFG"
+      - sed -i -E 's|^(export/android/android_sdk_path)[[:space:]]*=.*$|\1 = "$$SDK$$"|'
+        "$GODOT_CFG"
+      - $$Godot$$/bin/godot.linuxbsd.editor.x86_64 --headless --path . --export-release
+        'Android' builds/Valu-1.0.0-fdroid.apk
+    ndk: 29.0.14206865
+
+MaintainerNotes: |-
+  Draft pending fdroiddata CI and reviewer validation. Godot 4.7.1 pins NDK
+  29.0.14206865 and Java 21. The recipe builds the Linux editor and arm64
+  Android release template from the Godot srclib, assembles the template with
+  Gradle, injects it into a clean source export, and leaves the APK unsigned for
+  F-Droid. No prebuilt Godot binaries or export templates are used.
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+UpdateCheckData: export_presets.cfg|version/code=(\d+)|.|version/name="([\d.]+)"
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="432" viewBox="0 0 432 432">
+  <!-- Valu icon: split diamond "spike" with a teal core, arming ticks. Original artwork. -->
+  <rect width="432" height="432" fill="#0b0f17"/>
+  <circle cx="216" cy="220" r="176" fill="none" stroke="#1a2433" stroke-width="12"/>
+  <polygon points="216,66 328,220 216,374 104,220" fill="#ff5964"/>
+  <polygon points="216,66 328,220 216,374" fill="#d63c49"/>
+  <polygon points="216,150 269,220 216,290 163,220" fill="#59ffc8"/>
+  <polygon points="216,150 269,220 216,290" fill="#2fd6a4"/>
+  <rect x="209" y="26" width="14" height="28" fill="#59ffc8"/>
+  <rect x="146" y="52" width="12" height="22" fill="#ff5964" transform="rotate(-32 152 63)"/>
+  <rect x="274" y="52" width="12" height="22" fill="#ff5964" transform="rotate(32 280 63)"/>
+</svg>

@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"sheriff"
+display_name = "Sheriff"
+price = 800
+category = "Sidearm"
+slot = 1
+fire_mode = 0
+fire_rate = 4.0
+mag_size = 6
+reserve_ammo = 24
+reload_time = 2.25
+equip_time = 1.0
+max_range = 120.0
+damage_bands = Array[Vector4]([Vector4(30, 159, 55, 46), Vector4(50, 145, 50, 42)])
+melee_back_multiplier = 1.0
+applies_tag = true
+first_shot_spread = 0.25
+crouch_spread_mult = 0.75
+max_spread = 1.7
+spread_crouch_move = 0.45
+spread_walk = 1.0
+spread_run = 2.1
+spread_air = 7.0
+spray_pattern = Array[Vector2]([Vector2(0, 0), Vector2(0.25, 1.2), Vector2(-0.3, 1.9)])
+spray_random_spread = 1.0
+spray_growth_per_shot = 0.3
+recovery_time = 0.5
+recoil_kick_deg = 1.0
+ads_zoom = 0.0
+move_speed_mult = 0.8
+viewmodel_path = "res://assets/weapons/Revolver.gltf"
+viewmodel_scale = 1.0
+viewmodel_tint = Color(0.55, 0.45, 0.35, 1)
+fire_sound_path = "res://assets/audio/guns/gun_pistol_sheriff.wav"
+tracer_visible_to_others = true

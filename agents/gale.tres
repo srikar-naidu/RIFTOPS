@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="AgentData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/agent_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ability_data.gd" id="2"]
+
+[sub_resource type="Resource" id="ab_dash"]
+script = ExtResource("2")
+id = &"dash"
+display_name = "Dash"
+description = "Burst ~7m in your move direction (facing if standing still)."
+cost = 0
+max_charges = 1
+signature = true
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.45, 0.95, 0.85, 1)
+
+[sub_resource type="Resource" id="ab_updraft"]
+script = ExtResource("2")
+id = &"updraft"
+display_name = "Updraft"
+description = "Launch yourself ~4.5m into the air."
+cost = 150
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.45, 0.95, 0.85, 1)
+
+[sub_resource type="Resource" id="ab_cloudburst"]
+script = ExtResource("2")
+id = &"cloudburst"
+display_name = "Cloudburst"
+description = "Throw a projectile that pops a 4m smoke sphere for 4.5s."
+cost = 200
+max_charges = 2
+signature = false
+cooldown = 0.0
+map_targeted = false
+icon_color = Color(0.45, 0.95, 0.85, 1)
+
+[resource]
+script = ExtResource("1")
+id = &"gale"
+display_name = "Gale"
+role = "Duelist"
+description = "Mobile entry fragger: Dash, Updraft, Cloudburst smoke."
+model_path = "res://assets/characters/Ninja_Male.gltf"
+tint = Color(0.45, 0.95, 0.85, 1)
+abilities = [SubResource("ab_dash"), SubResource("ab_updraft"), SubResource("ab_cloudburst")]

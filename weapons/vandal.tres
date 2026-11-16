@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"vandal"
+display_name = "Vandal"
+price = 2900
+category = "Rifle"
+slot = 0
+fire_mode = 1
+fire_rate = 9.75
+mag_size = 25
+reserve_ammo = 75
+reload_time = 2.5
+equip_time = 1.0
+max_range = 120.0
+damage_bands = Array[Vector4]([Vector4(50, 160, 40, 34)])
+melee_back_multiplier = 1.0
+applies_tag = true
+first_shot_spread = 0.25
+crouch_spread_mult = 0.85
+max_spread = 2.5
+spread_crouch_move = 0.8
+spread_walk = 3.0
+spread_run = 6.0
+spread_air = 10.0
+spray_pattern = Array[Vector2]([Vector2(0, 0), Vector2(0.03, 0.4), Vector2(-0.05, 0.85), Vector2(0.08, 1.35), Vector2(-0.11, 1.8), Vector2(0.15, 2.2), Vector2(-0.2, 2.55), Vector2(0.25, 2.8), Vector2(-0.3, 3.0)])
+spray_random_spread = 1.35
+spray_growth_per_shot = 0.06
+recovery_time = 0.375
+recoil_kick_deg = 0.4
+ads_zoom = 1.25
+ads_spread_mult = 0.55
+ads_fire_rate_mult = 0.853
+ads_move_mult = 0.76
+ads_time = 0.25
+move_speed_mult = 0.8
+viewmodel_path = "res://assets/weapons/AK.gltf"
+viewmodel_scale = 1.0
+viewmodel_tint = Color(0.5, 0.28, 0.22, 1)
+fire_sound_path = "res://assets/audio/guns/gun_rifle_vandal.wav"
+tracer_visible_to_others = true

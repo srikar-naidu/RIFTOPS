@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"operator"
+display_name = "Operator"
+price = 4700
+category = "Sniper"
+slot = 0
+fire_mode = 2
+fire_rate = 0.6
+mag_size = 5
+reserve_ammo = 10
+reload_time = 3.7
+equip_time = 1.5
+max_range = 150.0
+damage_bands = Array[Vector4]([Vector4(50, 255, 150, 120)])
+melee_back_multiplier = 1.0
+applies_tag = true
+first_shot_spread = 5.0
+crouch_spread_mult = 0.9
+max_spread = 5.0
+spread_crouch_move = 7.5
+spread_walk = 10.0
+spread_run = 15.0
+spread_air = 15.0
+spray_pattern = Array[Vector2]([])
+spray_random_spread = 0.0
+spray_growth_per_shot = 0.0
+recovery_time = 0.5
+recoil_kick_deg = 1.6
+ads_zoom = 2.5
+ads_zoom_2 = 5.0
+ads_spread_mult = 0.0
+ads_fire_rate_mult = 1.0
+ads_move_mult = 0.72
+ads_time = 0.3
+move_speed_mult = 0.76
+viewmodel_path = "res://assets/weapons/Sniper.gltf"
+viewmodel_scale = 1.0
+viewmodel_tint = Color(0.25, 0.3, 0.42, 1)
+fire_sound_path = "res://assets/audio/guns/gun_sniper.wav"
+tracer_visible_to_others = true

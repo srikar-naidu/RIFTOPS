@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cpytc4g0fu3wv"
+
+[deps]
+
+files=["res://docs/BASELINE_SOURCE_HASHES.Bytes.translation", "res://docs/BASELINE_SOURCE_HASHES.SHA256.translation"]
+
+source_file="res://docs/BASELINE_SOURCE_HASHES.csv"
+dest_files=["res://docs/BASELINE_SOURCE_HASHES.Bytes.translation", "res://docs/BASELINE_SOURCE_HASHES.SHA256.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -31,7 +31,7 @@ func _run() -> void:
 		push_error("Play did not enter a running match")
 		quit(1)
 		return
-	if current_scene.get_node("MapRoot").get_child(0).name != "Solstice":
+	if current_scene.get_node("MapRoot").get_child(0).name != "Testsite07":
 		push_error("Play loaded the wrong arena")
 		quit(1)
 		return
@@ -49,5 +49,5 @@ func _run() -> void:
 		push_error("Leave did not close the session and room")
 		quit(1)
 		return
-	print("LOBBY UI SMOKE: PASS (no selectors, host Play, Solstice, return, Leave)")
+	print("LOBBY UI SMOKE: PASS (no selectors, host Play, Testsite07, return, Leave)")
 	quit(0)

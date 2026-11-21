@@ -69,6 +69,9 @@ func _maybe_refresh() -> void:
 func _refresh() -> void:
 	for c in _rows_box.get_children():
 		c.free()
+	if GameState.mode == GameState.Mode.FFA:
+		_ffa_rows()
+		return
 	var title := _mk_label("SCOREBOARD — ROUND %d" % maxi(GameState.round_number, 1), 26)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_rows_box.add_child(title)
@@ -110,3 +113,15 @@ func _add_team_section(team: int, score: int) -> void:
 			"◄ YOU" if id == Net.my_id() else ""],
 			17, Color(1, 1, 1) if id != Net.my_id() else Color(0.95, 0.9, 0.5))
 		_rows_box.add_child(row)
+
+func _ffa_rows() -> void:
+	_rows_box.add_child(_mk_label("FREE FOR ALL / TESTSITE-07", 28, Color("e1ed53")))
+	_rows_box.add_child(_mk_label("PLAYER                              KILLS     DEATHS     K/D", 18))
+	var ids: Array = Net.players.keys()
+	ids.sort_custom(func(a: int, b: int) -> bool:
+		var sa: Dictionary = GameState.stats.get(a, {"k":0,"d":0})
+		var sb: Dictionary = GameState.stats.get(b, {"k":0,"d":0})
+		return int(sa.k)>int(sb.k) if int(sa.k)!=int(sb.k) else int(sa.d)<int(sb.d))
+	for id: int in ids:
+		var st: Dictionary = GameState.stats.get(id, {"k":0,"d":0})
+		_rows_box.add_child(_mk_label("%-24s       %d          %d         %.2f" % [String(Net.players[id].name).left(20),int(st.k),int(st.d),float(st.k)/maxi(int(st.d),1)],22,Color("e1ed53") if id == Net.my_id() else Color.WHITE))

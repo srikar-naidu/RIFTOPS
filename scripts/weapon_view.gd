@@ -60,7 +60,10 @@ func show_weapon(d: WeaponData) -> void:
 
 
 func _fit_model(inst: Node3D, d: WeaponData) -> void:
-	fit_gun_model(inst, 0.62 * d.viewmodel_scale)
+	if String(d.id) == "vandal":
+		inst.scale = Vector3.ONE * 0.85
+	else:
+		fit_gun_model(inst, 0.62 * d.viewmodel_scale)
 
 
 ## Shared gun-model normalization (first- and third-person): orients the

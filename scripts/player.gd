@@ -173,7 +173,7 @@ func refresh_team_visuals() -> void:
 
 func _setup_third_person_model() -> void:
 	var agent := AgentDB.get_agent(StringName(agent_id))
-	var model_path := agent.model_path if agent != null else "res://assets/characters/Character_Soldier.gltf"
+	var model_path := "res://assets/characters/rift_operator.tscn" if GameState.mode == GameState.Mode.FFA else (agent.model_path if agent != null else "res://assets/characters/Character_Soldier.gltf")
 	if not ResourceLoader.exists(model_path):
 		model_path = "res://assets/characters/Character_Soldier.gltf"
 	if ResourceLoader.exists(model_path):
@@ -183,7 +183,8 @@ func _setup_third_person_model() -> void:
 			if inst != null:
 				fallback_mesh.visible = false
 				body_visual.add_child(inst)
-				_normalize_model_height(inst, 1.75)
+				if GameState.mode != GameState.Mode.FFA:
+					_normalize_model_height(inst, 1.75)
 				var ap: AnimationPlayer = inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
 				if ap != null and ap.has_animation("Idle"):
 					ap.play("Idle")
@@ -191,6 +192,8 @@ func _setup_third_person_model() -> void:
 		var mat := StandardMaterial3D.new()
 		mat.albedo_color = GameState.team_color(team).darkened(0.2)
 		fallback_mesh.material_override = mat
+	if GameState.mode == GameState.Mode.FFA:
+		return
 	var band := MeshInstance3D.new()
 	var band_mesh := BoxMesh.new()
 	band_mesh.size = Vector3(0.68, 0.07, 0.48)
@@ -219,6 +222,8 @@ func _normalize_model_height(inst: Node3D, target: float) -> void:
 ## Simple third-person gun so enemies can read what you're holding
 ## (matters for Operators). Rebuilt when the synced slot/loadout changes.
 func _update_tp_gun() -> void:
+	if GameState.mode == GameState.Mode.FFA:
+		return
 	var wid := ""
 	match sync_slot:
 		WeaponData.Slot.PRIMARY: wid = primary_id
@@ -674,7 +679,7 @@ func take_damage_server(amount: int, region: int, attacker: Node, weapon: Weapon
 	if not multiplayer.is_server() or not alive:
 		return {"applied": 0, "killed": false}
 	var attacker_team := int(attacker.get("team")) if attacker != null and attacker.get("team") != null else 0
-	if attacker != self and attacker_team != 0 and attacker_team == team:
+	if GameState.mode != GameState.Mode.FFA and attacker != self and attacker_team != 0 and attacker_team == team:
 		return {"applied": 0, "killed": false}  # no bullet friendly fire
 	var killer_name := String(attacker.get("player_name")) if attacker != null else "World"
 	var killer_peer := (attacker as Player).peer_id() if attacker is Player else 0

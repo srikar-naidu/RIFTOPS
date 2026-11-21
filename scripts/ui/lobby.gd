@@ -7,7 +7,7 @@ const STAGE = preload("res://scripts/ui/operator_stage.gd")
 const ACCENT := Color("e1ed53")
 const INK := Color("101815")
 const MUTED := Color("9aafb8")
-const MAP := "res://maps/solstice/solstice.tscn"
+const MAP := "res://maps/testsite07/testsite07.tscn"
 var _roster: VBoxContainer
 var _count: Label
 var _identity: Label
@@ -145,8 +145,8 @@ func _ready() -> void:
 	var match_stack := VBoxContainer.new()
 	match_panel.add_child(match_stack)
 	match_stack.add_child(_label("CURRENT ARENA", 13, ACCENT))
-	match_stack.add_child(_label("SOLSTICE", 32))
-	match_stack.add_child(_label("TEAM DEATHMATCH", 16, MUTED))
+	match_stack.add_child(_label("TESTSITE-07", 32))
+	match_stack.add_child(_label("FREE FOR ALL  /  FIRST TO 30", 16, MUTED))
 	_play = _button("PLAY  >", true)
 	_play.custom_minimum_size.y = 68
 	_play.pressed.connect(_on_start)
@@ -208,4 +208,4 @@ static func _lan_ips() -> Array[String]:
 func _on_start() -> void:
 	if not Net.is_active() or not multiplayer.is_server():
 		return
-	GameState.host_start_match(MAP, GameState.Mode.TDM, Net.lobby_team_size)
+	GameState.host_start_match(MAP, GameState.Mode.FFA, Net.lobby_team_size, 30)

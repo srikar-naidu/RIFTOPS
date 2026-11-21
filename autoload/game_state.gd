@@ -16,7 +16,7 @@ enum RoundPhase {
 	ROUND_END,  ## Short outro before next round / match end.
 }
 
-enum Mode { TDM, SPIKE }
+enum Mode { TDM, SPIKE, FFA }
 
 enum SpikeState { CARRIED, DROPPED, PLANTED, DEFUSED, DETONATED }
 
@@ -151,9 +151,9 @@ func _process(delta: float) -> void:
 	if _time_bcast_accum >= 2.0:
 		_time_bcast_accum = 0.0
 		rpc("cl_time", match_time_left)
-	if mode == Mode.TDM:
+	if mode != Mode.SPIKE:
 		if match_time_left <= 0.0:
-			_server_end_match(_leading_team())
+			_server_end_match(ffa_leader() if mode == Mode.FFA else _leading_team())
 	else:
 		_spike_server_tick(delta)
 
@@ -249,9 +249,9 @@ func cl_start_match(cfg: Dictionary) -> void:
 	_loss_streak = {Team.ATTACKERS: 0, Team.DEFENDERS: 0}
 	_interact_held = {}
 	_pistol_next = false
-	match_time_left = TDM_TIME_LIMIT if mode == Mode.TDM else cfg_buy
+	match_time_left = TDM_TIME_LIMIT if mode != Mode.SPIKE else cfg_buy
 	match_running = true
-	phase = RoundPhase.ACTIVE if mode == Mode.TDM else RoundPhase.BUY
+	phase = RoundPhase.ACTIVE if mode != Mode.SPIKE else RoundPhase.BUY
 	local_player = null
 	match_started.emit()
 	print("[GAME] match starting: map=%s mode=%d rtw=%d" % [map_path, mode, rounds_to_win])
@@ -809,6 +809,22 @@ func _player_node(peer: int) -> Node:
 func server_report_kill(killer_name: String, killer_team: int, victim_name: String, victim_team: int, weapon_id: String, headshot: bool, killer_peer := 0, victim_peer := 0) -> void:
 	if not multiplayer.is_server():
 		return
+	if mode == Mode.FFA:
+		if not match_running:
+			return
+		if victim_peer != 0:
+			if not stats.has(victim_peer):
+				stats[victim_peer] = {"k": 0, "d": 0, "a": 0}
+			stats[victim_peer].d += 1
+		if killer_peer != 0 and killer_peer != victim_peer:
+			if not stats.has(killer_peer):
+				stats[killer_peer] = {"k": 0, "d": 0, "a": 0}
+			stats[killer_peer].k += 1
+		rpc("cl_stats", stats)
+		rpc("cl_kill_feed", killer_name, victim_name, weapon_id, headshot, 0, 0, 0)
+		if killer_peer != 0 and int(stats.get(killer_peer, {}).get("k", 0)) >= tdm_target:
+			_server_end_match(killer_peer)
+		return
 	if killer_team != victim_team:
 		match killer_team:
 			Team.ATTACKERS: kills_a += 1
@@ -1070,3 +1086,17 @@ func reset_match_state() -> void:
 	stats = {}
 	_loadouts = {}
 	local_player = null
+
+func ffa_leader() -> int:
+	var leader := 0
+	var best := 0
+	for id: int in stats:
+		if not Net.players.has(id):
+			continue
+		var kills := int(stats[id].k)
+		if kills > best:
+			best = kills
+			leader = id
+		elif kills == best:
+			leader = 0
+	return leader

@@ -69,7 +69,7 @@ func _check_autostart() -> void:
 		return
 	if Net.players.size() >= _start_when:
 		_auto_started = true
-		var mode := GameState.Mode.SPIKE if Cli.value("mode", "tdm") == "spike" else GameState.Mode.TDM
+		var mode := GameState.Mode.SPIKE if Cli.value("mode", "tdm") == "spike" else (GameState.Mode.FFA if Cli.value("mode", "tdm") == "ffa" else GameState.Mode.TDM)
 		GameState.host_start_match(_auto_map, mode, Net.lobby_team_size, Cli.value_int("tdm-target", GameState.TDM_TARGET_KILLS))
 
 

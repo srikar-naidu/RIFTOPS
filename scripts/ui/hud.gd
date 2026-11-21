@@ -75,6 +75,8 @@ func _mk_label(size_px: int, color := Color.WHITE) -> Label:
 
 func _ready() -> void:
 	add_to_group("hud")
+	add_child(preload("res://scripts/ui/minimap.gd").new())
+	GameState.stats_changed.connect(_update_scores)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
@@ -426,17 +428,17 @@ func _process(_delta: float) -> void:
 			_phase_label.text = "ROUND %d — %s" % [GameState.round_number, GameState.phase_name(GameState.phase)]
 	else:
 		_timer_label.text = "%d:%02d" % [t / 60, t % 60]
-		_phase_label.text = ""
+		_phase_label.text = "FREE FOR ALL  /  %d KILLS" % GameState.tdm_target if GameState.mode == GameState.Mode.FFA else ""
 	if player != null and wm != null and player.alive:
 		_crosshair.spread_px = _spread_to_px(wm.current_spread_deg())
-	if _death_overlay.visible and GameState.mode == GameState.Mode.TDM:
+	if _death_overlay.visible and GameState.mode != GameState.Mode.SPIKE:
 		var left := maxf(GameState.TDM_RESPAWN_DELAY - float(Time.get_ticks_msec() - _death_time_ms) / 1000.0, 0.0)
 		_death_sub.text = "Respawning in %.1f" % left
 	# Progress bar auto-hide when updates stop coming.
 	if _progress_box.visible and Time.get_ticks_msec() - _progress_last_ms > 450:
 		_progress_box.visible = false
 	# Scoreboard: hold Tab (or touch toggle); auto during round end / match end.
-	var want_sb := Input.is_action_pressed("scoreboard") or _touch.scoreboard_open() \
+	var want_sb := (GameState.mode == GameState.Mode.FFA and not GameState.match_running) or Input.is_action_pressed("scoreboard") or _touch.scoreboard_open() \
 		or (GameState.mode == GameState.Mode.SPIKE and GameState.phase == GameState.RoundPhase.ROUND_END) \
 		or (not GameState.match_running and GameState.round_number > 0 and GameState.mode == GameState.Mode.SPIKE)
 	if want_sb and not _scoreboard.visible:
@@ -715,6 +717,10 @@ func _on_killfeed(killer: String, victim: String, weapon_id: String, headshot: b
 
 
 func _update_scores() -> void:
+	if GameState.mode == GameState.Mode.FFA:
+		_score_att.text = "K %d" % int(GameState.stats.get(Net.my_id(), {}).get("k",0))
+		_score_def.text = "D %d" % int(GameState.stats.get(Net.my_id(), {}).get("d",0))
+		return
 	if GameState.mode == GameState.Mode.SPIKE:
 		var my_team := int(player.team) if player != null else 0
 		_score_att.text = ("▶%d" if my_team == GameState.Team.ATTACKERS else "%d") % GameState.score_att
@@ -728,6 +734,11 @@ func _on_match_end(winning_team: int) -> void:
 	_death_overlay.visible = false
 	_banner.visible = false
 	_end_panel.visible = true
+	if GameState.mode == GameState.Mode.FFA:
+		_end_title.text = "DRAW" if winning_team == 0 else "%s WINS" % String(Net.players.get(winning_team, {}).get("name", "Player")).to_upper()
+		_end_sub.text = "Match complete · returning to lobby"
+		_scoreboard.open()
+		return
 	if winning_team == GameState.Team.NONE:
 		_end_title.text = "DRAW"
 	else:

@@ -126,6 +126,10 @@ func _spawn_player(id: int) -> void:
 	p.primary_id = String(info.get("primary", "vandal"))
 	p.secondary_id = String(info.get("secondary", "classic"))
 	p.agent_id = String(info.get("agent", AgentDB.DEFAULT_AGENT))
+	if GameState.mode == GameState.Mode.FFA:
+		p.primary_id = "vandal"
+		p.secondary_id = "classic"
+		p.team = GameState.Team.NONE
 	if GameState.mode == GameState.Mode.SPIKE:
 		p.primary_id = ""
 		p.secondary_id = "classic"
@@ -152,6 +156,8 @@ func _spawn_player(id: int) -> void:
 ## Spawn transform for a team; deterministic when idx >= 0 (round starts),
 ## random otherwise (TDM respawns).
 func pick_spawn(team: int, idx: int = -1) -> Transform3D:
+	if GameState.mode == GameState.Mode.FFA:
+		return _ffa_spawn()
 	var group := "spawn_attacker" if team == GameState.Team.ATTACKERS else "spawn_defender"
 	var markers := get_tree().get_nodes_in_group(group)
 	if markers.is_empty():
@@ -164,7 +170,7 @@ func pick_spawn(team: int, idx: int = -1) -> Transform3D:
 
 
 func _on_player_died(pid: int) -> void:
-	if not GameState.match_running or GameState.mode != GameState.Mode.TDM:
+	if not GameState.match_running or GameState.mode == GameState.Mode.SPIKE:
 		return
 	get_tree().create_timer(GameState.TDM_RESPAWN_DELAY).timeout.connect(func() -> void:
 		if not GameState.match_running:
@@ -179,3 +185,20 @@ func _on_player_left(pid: int) -> void:
 	var node := players_root.get_node_or_null(str(pid))
 	if node != null:
 		node.queue_free()
+
+func _ffa_spawn() -> Transform3D:
+	var markers := get_tree().get_nodes_in_group("spawn_ffa")
+	if markers.is_empty():
+		return Transform3D(Basis.IDENTITY, Vector3(0, .2, 0))
+	markers.shuffle()
+	var chosen: Node3D = markers[0]
+	var best := -1.0
+	for marker: Node3D in markers:
+		var distance := 10000.0
+		for other: Node3D in players_root.get_children():
+			if other.alive:
+				distance = minf(distance, marker.global_position.distance_squared_to(other.global_position))
+		if distance > best:
+			best = distance
+			chosen = marker
+	return chosen.global_transform

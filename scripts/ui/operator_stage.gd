@@ -123,7 +123,7 @@ func _build_hangar() -> void:
 		prop.position = position_value - Vector3.UP * bounds.position.y * prop.scale.y
 
 func _build_operator() -> void:
-	var actor := (load("res://assets/characters/Soldier_Male.gltf") as PackedScene).instantiate() as Node3D
+	var actor := (load("res://assets/characters/rift_operator.tscn") as PackedScene).instantiate() as Node3D
 	_world.add_child(actor)
 	var bounds := WeaponView.merged_aabb(actor)
 	var scale_factor := 2.1 / maxf(bounds.size.y, 0.01)

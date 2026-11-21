@@ -13,8 +13,8 @@ config_version=5
 config/name="RIFTOPS"
 config/version="1.0.0"
 run/main_scene="res://scenes/boot.tscn"
-run/max_fps=60
 config/features=PackedStringArray("4.7", "Mobile")
+run/max_fps=60
 boot_splash/bg_color=Color(0.043, 0.058, 0.089, 1)
 boot_splash/show_image=false
 config/icon="res://icon.svg"
@@ -32,10 +32,6 @@ window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=4
-
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
 
 [input]
 
@@ -141,6 +137,10 @@ pause={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [layer_names]
 
 3d_physics/layer_1="world"
@@ -152,12 +152,6 @@ pause={
 [rendering]
 
 renderer/rendering_method="mobile"
-renderer/rendering_method.mobile="mobile"
 textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_3d=1
-lights_and_shadows/directional_shadow/size=4096
-lights_and_shadows/directional_shadow/size.mobile=2048
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=2
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=1
-lights_and_shadows/positional_shadow/atlas_size=4096
-lights_and_shadows/positional_shadow/atlas_size.mobile=2048
+anti_aliasing/quality/msaa_3d=1

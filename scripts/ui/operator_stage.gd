@@ -129,7 +129,7 @@ func _build_operator() -> void:
 	var scale_factor := 2.1 / maxf(bounds.size.y, 0.01)
 	actor.scale = Vector3.ONE * scale_factor
 	actor.position.y = -bounds.position.y * scale_factor
-	actor.rotation.y = -0.22
+	actor.rotation.y = PI - 0.3
 	var animation := actor.find_child("AnimationPlayer", true, false) as AnimationPlayer
 	if animation != null and animation.has_animation("Idle"):
 		animation.play("Idle")

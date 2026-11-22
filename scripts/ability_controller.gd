@@ -44,6 +44,8 @@ func _process(_delta: float) -> void:
 ## Local entry point (input / HUD). Map-targeted abilities detour through the
 ## targeting overlay, which calls cast_at() with a world position.
 func try_cast(slot: int) -> void:
+	if GameState.mode == GameState.Mode.FFA:
+		return
 	var ab := ability(slot)
 	if ab == null:
 		return
@@ -81,7 +83,7 @@ func srv_cast(slot: int, origin: Vector3, dir: Vector3, target: Vector3) -> void
 
 
 func _server_cast(slot: int, origin: Vector3, dir: Vector3, target: Vector3) -> void:
-	if not player.alive or not GameState.match_running:
+	if GameState.mode == GameState.Mode.FFA or not player.alive or not GameState.match_running:
 		return
 	if GameState.phase != GameState.RoundPhase.ACTIVE and GameState.phase != GameState.RoundPhase.PLANTED:
 		return

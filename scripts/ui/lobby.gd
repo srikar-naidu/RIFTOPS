@@ -106,7 +106,7 @@ func _ready() -> void:
 	var left := VBoxContainer.new()
 	left.custom_minimum_size.x = 220
 	middle.add_child(left)
-	left.add_child(_label("OPERATOR / 01", 15, ACCENT))
+	left.add_child(_label("VOLT / STREET RUNNER", 15, ACCENT))
 	_identity = _label("", 26)
 	_identity.custom_minimum_size.x = 220
 	_identity.clip_text = true

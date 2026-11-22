@@ -466,7 +466,7 @@ func _update_capsule(delta: float) -> void:
 func _process(_delta: float) -> void:
 	if not is_local():
 		var lp := GameState.local_player
-		name_tag.visible = alive and lp != null and lp != self and int(lp.team) == team
+		name_tag.visible = GameState.mode != GameState.Mode.FFA and alive and lp != null and lp != self and int(lp.team) == team
 		_update_remote_anim()
 		_update_tp_gun()
 

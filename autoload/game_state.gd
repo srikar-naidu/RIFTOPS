@@ -1060,7 +1060,7 @@ func cl_match_end(winning_team: int, a: int, b: int) -> void:
 		score_att = a
 		score_def = b
 	match_ended.emit(winning_team)
-	print("[GAME] match over — %s win (%d-%d)" % [team_name(winning_team), a, b])
+	print("[GAME] match over — %s win (%d-%d)" % [String(Net.players.get(winning_team, {}).get("name", "Draw")) if mode == Mode.FFA else team_name(winning_team), a, b])
 	if Cli.test_mode():
 		print("[TEST] match_end winner=%d score=%d-%d" % [winning_team, a, b])
 	get_tree().create_timer(8.0).timeout.connect(_return_to_menu)

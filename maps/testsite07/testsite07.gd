@@ -93,6 +93,7 @@ func _ready() -> void:
 	e.fog_enabled = true
 	e.fog_light_color = Color("bccbc6")
 	e.fog_density = .0015
+	e.fog_sky_affect = .08
 	env.environment = e
 	add_child(env)
 	var sun := DirectionalLight3D.new()
@@ -129,6 +130,9 @@ func house(center: Vector3, paint: Material, mirror: bool) -> void:
 	for i in range(15):
 		var height := (i+1)*.22
 		block(center+Vector3(-3.8,height/2,-5.4+i*.38),Vector3(1.7,height,.38),concrete)
+	var ramp := block(center+Vector3(-3.8,1.66,-2.65),Vector3(1.7,.06,6.60),concrete,true,Vector3(-atan(.22/.38),0,0))
+	ramp.visible = false
+	ramp.set_meta("collision_only",true)
 	# Sloping roof over the front room; keeps terrace and stairs clear.
 	for side in [-1,1]:
 		block(center+Vector3(side*2.55,4.15,-3.5),Vector3(5.5,.18,4.6),roof,true,Vector3(0,0,-side*.25))

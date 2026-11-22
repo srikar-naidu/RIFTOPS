@@ -44,6 +44,8 @@ static func merge_static(root: Node3D) -> void:
 		if not child is MeshInstance3D:
 			continue
 		var mesh := child as MeshInstance3D
+		if mesh.has_meta("collision_only"):
+			continue
 		var mat := mesh.material_override
 		if not batches.has(mat):
 			var surface := SurfaceTool.new()
